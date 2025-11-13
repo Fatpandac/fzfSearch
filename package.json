@@ -14,8 +14,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "filesfzf.helloWorld",
-        "title": "Hello World"
+        "command": "filesfzf.serach.file.toggle",
+        "title": "FilesFzf: search file toggle"
+      },
+      {
+        "command": "filesfzf.serach.content.toggle",
+        "title": "FilesFzf: search content toggle"
       }
     ]
   },
