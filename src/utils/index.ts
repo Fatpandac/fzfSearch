@@ -11,7 +11,7 @@ fzf \
 export const SEARCH_CONTENT_CMD = (chooseFilePaths: string) => {
 	return `
 fzf --phony --query "" --layout=reverse \
---preview "bat --color=always --plain --highlight-line {2} {1}" \
+--preview "bat --color=always --plain --highlight-line {2} {1} 2>/dev/null || true" \
 --delimiter ':' \
 --preview-window "+{2}-10" \
 --bind "change:reload:(rg -n {q} || true)" \
