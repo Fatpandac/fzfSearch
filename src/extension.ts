@@ -2,12 +2,13 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import path from 'path';
 import * as fs from 'fs';
-import { SEARCH_CONTENT_CMD, SEARCH_FILE_CMD } from './utils';
+import { ensureToolsInstalled, SEARCH_CONTENT_CMD, SEARCH_FILE_CMD } from './utils';
 
 let terminal: vscode.Terminal | undefined;
 let lastActiveEditor: vscode.Uri | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
+  ensureToolsInstalled();
 	const disposableSearchFiles = vscode.commands.registerCommand('filesfzf.serach.file.toggle', () => {
 		openTerminal(SEARCH_FILE_CMD);
 	});

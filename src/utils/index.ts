@@ -1,22 +1,2 @@
-const KEYMAPPING = "--bind \"ctrl-d:preview-half-page-down,ctrl-u:preview-half-page-up,esc:become:\"";
-const LAYOUT = "--layout=reverse";
-
-export const SEARCH_FILE_CMD = (chooseFilePaths: string) => {
-	return `
-fzf \
---preview "bat --color=always --plain {}" \
-${LAYOUT} \
-${KEYMAPPING} \
---multi > "${chooseFilePaths}"`;
-};
-
-export const SEARCH_CONTENT_CMD = (chooseFilePaths: string) => {
-	return `
-fzf --phony --query "" ${LAYOUT} \
---preview "bat --color=always --plain --highlight-line {2} {1} 2>/dev/null || true" \
---delimiter ':' \
---preview-window "+{2}-10" \
---bind "change:reload:(rg -n {q} || true)" \
-${KEYMAPPING} \
---multi > "${chooseFilePaths}"`;
-};
+export * from './fzf';
+export * from './check';
