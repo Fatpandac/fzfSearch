@@ -1,7 +1,7 @@
 {
-  "name": "filesfzf",
-  "displayName": "filesfzf",
-  "description": "implment fzf into vscode",
+  "name": "fzfsearch",
+  "displayName": "fzfsearch",
+  "description": "A fast file and content search extension powered by fzf, ripgrep and bat. Quickly search files or text inside your workspace using a terminal-based fuzzy finder.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"
@@ -16,12 +16,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "filesfzf.serach.file.toggle",
-        "title": "FilesFzf: search file toggle"
+        "command": "fzfsearch.serach.file.toggle",
+        "title": "fzfSearch: search file toggle"
       },
       {
-        "command": "filesfzf.serach.content.toggle",
-        "title": "FilesFzf: search content toggle"
+        "command": "fzfsearch.serach.content.toggle",
+        "title": "fzfSearch: search content toggle"
       }
     ]
   },
