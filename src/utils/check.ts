@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { exec } from "child_process";
 
-const NEEDED_CLI_TOOL = ["fzf", "rg"];
+const NEEDED_CLI_TOOL = ["fzf", "rg", "bat"];
 
 function checkCommandExists(cmd: string): Promise<boolean> {
   return new Promise((resolve) => {
