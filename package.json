@@ -3,6 +3,11 @@
   "displayName": "fzfsearch",
   "description": "A fast file and content search extension powered by fzf, ripgrep and bat. Quickly search files or text inside your workspace using a terminal-based fuzzy finder.",
   "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fatpandac/fzfSearch.git"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
