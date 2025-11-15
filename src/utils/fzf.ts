@@ -4,7 +4,7 @@ const CYCLE = "--cycle";
 
 export const SEARCH_FILE_CMD = (chooseFilePaths: string) => {
 	return `
-fzf \
+rg --files | fzf \
 --preview "bat --color=always --plain {}" \
 ${LAYOUT} \
 ${KEYMAPPING} \
@@ -14,11 +14,12 @@ ${CYCLE} \
 
 export const SEARCH_CONTENT_CMD = (chooseFilePaths: string) => {
 	return `
-fzf --phony --query "" ${LAYOUT} \
+fzf --phony --query "" \
 --preview "bat --color=always --plain --highlight-line {2} {1} 2>/dev/null || true" \
 --delimiter ':' \
 --preview-window "+{2}-10" \
 --bind "change:reload:(rg -n {q} || true)" \
+${LAYOUT} \
 ${KEYMAPPING} \
 ${CYCLE} \
 --multi > "${chooseFilePaths}"`;
