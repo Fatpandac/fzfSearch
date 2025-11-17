@@ -19,6 +19,7 @@ fzf --phony --query "" \
 --delimiter ':' \
 --preview-window "+{2}-10" \
 --bind "change:reload:(rg -n {q} || true)" \
+--bind "start:reload:(rg -n {q} || true)" \
 ${LAYOUT} \
 ${KEYMAPPING} \
 ${CYCLE} \
