@@ -2,18 +2,20 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import path from 'path';
 import * as fs from 'fs';
-import { ensureToolsInstalled, SEARCH_CONTENT_CMD, SEARCH_FILE_CMD } from './utils';
+import { ensureToolsInstalled } from './utils';
 
 let terminal: vscode.Terminal | undefined;
 let lastActiveEditor: vscode.Uri | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
-  ensureToolsInstalled();
+	ensureToolsInstalled();
 	const disposableSearchFiles = vscode.commands.registerCommand('fzfsearch.search.file.toggle', () => {
-		openTerminal(SEARCH_FILE_CMD);
+		const searchFileCmd = path.join(context.extensionPath, 'src', 'scripts', 'searchfile', 'searchfile.sh');
+		openTerminal(searchFileCmd);
 	});
 	const disposableSearchContent = vscode.commands.registerCommand('fzfsearch.search.content.toggle', () => {
-		openTerminal(SEARCH_CONTENT_CMD);
+		const searchContentCmd = path.join(context.extensionPath, 'src', 'scripts', 'searchcontent', 'searchcontent.sh');
+		openTerminal(searchContentCmd);
 	});
 
 	context.subscriptions.push(disposableSearchFiles);
@@ -21,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
-async function openTerminal(cmd: (chooseFilePaths: string) => string) {
+async function openTerminal(scriptPath: string) {
 	try {
 		const activeEditor = vscode.window.activeTextEditor;
 		if (activeEditor) {
@@ -39,7 +41,7 @@ async function openTerminal(cmd: (chooseFilePaths: string) => string) {
 		terminal = vscode.window.createTerminal({
 			name: "fzf",
 			shellPath: "bash",
-			shellArgs: ["-c", cmd(chooseFilesPath)],
+			shellArgs: ["-c", `${scriptPath} ${chooseFilesPath}`],
 			cwd: cwd,
 			location: vscode.TerminalLocation.Editor,
 		});
