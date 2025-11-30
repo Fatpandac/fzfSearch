@@ -9,10 +9,10 @@ let lastActiveEditor: vscode.Uri | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
   ensureToolsInstalled();
-	const disposableSearchFiles = vscode.commands.registerCommand('filesfzf.serach.file.toggle', () => {
+	const disposableSearchFiles = vscode.commands.registerCommand('fzfsearch.search.file.toggle', () => {
 		openTerminal(SEARCH_FILE_CMD);
 	});
-	const disposableSearchContent = vscode.commands.registerCommand('filesfzf.serach.content.toggle', () => {
+	const disposableSearchContent = vscode.commands.registerCommand('fzfsearch.search.content.toggle', () => {
 		openTerminal(SEARCH_CONTENT_CMD);
 	});
 
@@ -31,7 +31,7 @@ async function openTerminal(cmd: (chooseFilePaths: string) => string) {
 		}
 		let cwd = os.homedir();
 
-		const chooseFilesPath = path.join(os.tmpdir(), './filesfzf.tmp');
+		const chooseFilesPath = path.join(os.tmpdir(), './fzfsearch.tmp');
 		const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
 		if (workspaceFolder) {
 			cwd = workspaceFolder.uri.fsPath;

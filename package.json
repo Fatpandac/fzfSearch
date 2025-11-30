@@ -21,11 +21,11 @@
   "contributes": {
     "commands": [
       {
-        "command": "fzfsearch.serach.file.toggle",
+        "command": "fzfsearch.search.file.toggle",
         "title": "fzfSearch: search file toggle"
       },
       {
-        "command": "fzfsearch.serach.content.toggle",
+        "command": "fzfsearch.search.content.toggle",
         "title": "fzfSearch: search content toggle"
       }
     ]
