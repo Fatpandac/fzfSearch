@@ -2,6 +2,7 @@
   "name": "fzfsearch",
   "displayName": "fzfsearch",
   "description": "A fast file and content search extension powered by fzf, ripgrep and bat. Quickly search files or text inside your workspace using a terminal-based fuzzy finder.",
+  "publisher": "Fatpandac",
   "icon": "assets/logo.png",
   "version": "0.0.1",
   "license": "MIT",
