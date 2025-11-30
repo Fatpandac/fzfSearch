@@ -4,7 +4,7 @@ A fast file and content search extension powered by fzf, ripgrep and bat. Quickl
 
 ![screenshot](https://github.com/Fatpandac/fzfSearch/blob/main/assets/screenshot.gif)
 
-# Requestment
+# Requirements
 
 You need to install `fzf`, `ripgrep`, and `bat` before using this extension.  
 On macOS, you can install them with the following command:
