@@ -1,9 +1,9 @@
 # Change Log
 
-All notable changes to the "filesfzf" extension will be documented in this file.
+## [v0.0.2] - 2025-11-30
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+- Enhancement: Improved file search functionality in fzf_reload_by_query.sh script.
 
-## [Unreleased]
+## [v0.0.1] - 2025-11-30
 
 - Initial release
