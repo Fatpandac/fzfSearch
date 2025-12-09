@@ -7,6 +7,12 @@ import { ensureToolsInstalled } from './utils';
 let terminal: vscode.Terminal | undefined;
 let lastActiveEditor: vscode.Uri | undefined;
 
+
+function getExcludeGlob(): string {
+	const config = vscode.workspace.getConfiguration('fzfsearch');
+	return config.get<string>('excludeGlob', '');
+}
+
 export function activate(context: vscode.ExtensionContext) {
 	ensureToolsInstalled();
 	const disposableSearchFiles = vscode.commands.registerCommand('fzfsearch.search.file.toggle', () => {
@@ -43,6 +49,9 @@ async function openTerminal(scriptPath: string) {
 			shellPath: "bash",
 			shellArgs: ["-c", `${scriptPath} ${chooseFilesPath}`],
 			cwd: cwd,
+			env: {
+				'RIPGREP_GLOB': getExcludeGlob(),
+			},
 			location: vscode.TerminalLocation.Editor,
 		});
 

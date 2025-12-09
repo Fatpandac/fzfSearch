@@ -10,7 +10,7 @@ fzf_reload_by_query() {
 
   name=$(printf "%s" "$q:" | cut -d: -f1)
   line=$(printf "%s" "$q:" | cut -d: -f2)
-  res=$(rg --files | fzf -f "$name")
+  res=$(rg --hidden --glob $RIPGREP_GLOB --files | fzf -f "$name")
 
   if [ -z "$res" ]; then
     return

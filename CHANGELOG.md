@@ -1,5 +1,9 @@
 # Change Log
 
+## [v0.0.3] - 2025-12-09
+
+- Enhancement: Added configuration option to exclude specific file patterns from search results.
+
 ## [v0.0.2] - 2025-11-30
 
 - Enhancement: Improved file search functionality in fzf_reload_by_query.sh script.

@@ -12,7 +12,7 @@ fzf --phony --query "" \
     --preview-window "+{2}-10" \
     --preview "source $previewPath && preview {1} {2}" \
     --bind "change:reload:(source $queryReloadPath && fzf_reload_by_query {q})" \
-    --bind "start:reload:(rg --files)" \
+    --bind "start:reload:(rg --hidden --glob $RIPGREP_GLOB --files)" \
     --cycle \
     --bind "$KEYMAPPING" \
     --layout "$LAYOUT" \

@@ -4,7 +4,7 @@
   "description": "A fast file and content search extension powered by fzf, ripgrep and bat. Quickly search files or text inside your workspace using a terminal-based fuzzy finder.",
   "publisher": "Fatpandac",
   "icon": "assets/logo.png",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -34,7 +34,17 @@
         "command": "fzfsearch.search.content.toggle",
         "title": "fzfSearch: search content toggle"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "FZF Search Settings",
+      "properties": {
+        "fzfsearch.excludeGlob": {
+          "type": "string",
+          "default": "!{.git}",
+          "description": "Glob pattern to exclude when searching (passed to ripgrep)."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
