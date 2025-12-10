@@ -1,5 +1,9 @@
 # Change Log
 
+## [v0.0.4] - 2025-12-10
+
+- Enhancement: Support for searching within specific repositories by adding a new configuration option "repositoryPath".
+
 ## [v0.0.3] - 2025-12-09
 
 - Enhancement: Added configuration option to exclude specific file patterns from search results.
