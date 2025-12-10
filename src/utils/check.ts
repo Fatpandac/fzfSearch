@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
 import { exec } from "child_process";
 
-const NEEDED_CLI_TOOL = ["fzf", "rg", "bat"];
+export const NEEDED_CLI_TOOL = ["fzf", "rg", "bat"];
+export const REPO_SEARCH_NEEDED_CLI_TOOL = ["fzf", "bat", "fd"];
 
 function checkCommandExists(cmd: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -15,8 +16,8 @@ function generateDownloadCommand(tool: string): string {
   return `brew install ${tool}`;
 }
 
-export async function ensureToolsInstalled() {
-  for (const tool of NEEDED_CLI_TOOL) {
+export async function ensureToolsInstalled(checkTools: string[] = NEEDED_CLI_TOOL) {
+  for (const tool of checkTools) {
     const installed = await checkCommandExists(tool);
     if (!installed) {
       vscode.window

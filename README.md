@@ -10,5 +10,7 @@ You need to install `fzf`, `ripgrep`, and `bat` before using this extension.
 On macOS, you can install them with the following command:
 
 ```sh
-brew install fzf ripgrep bat
+brew install fzf ripgrep bat fd onefetch
 ```
+
+`onefetch` is optional and only used to display repository information in the preview window.
