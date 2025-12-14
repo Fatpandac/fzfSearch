@@ -2,22 +2,10 @@ import * as vscode from 'vscode';
 import * as os from 'os';
 import path from 'path';
 import * as fs from 'fs';
-import { ensureToolsInstalled, REPO_SEARCH_NEEDED_CLI_TOOL } from './utils';
-import { url } from 'inspector';
+import { ensureToolsInstalled, REPO_SEARCH_NEEDED_CLI_TOOL, OpenRepoOption, openFolder, getExcludeGlob, getRepositoryPath, } from './utils';
 
 let terminal: vscode.Terminal | undefined;
 let lastActiveEditor: vscode.Uri | undefined;
-
-
-function getExcludeGlob(): string {
-	const config = vscode.workspace.getConfiguration('fzfsearch');
-	return config.get<string>('excludeGlob', '');
-}
-
-function getRepositoryPath(): string[] {
-	const config = vscode.workspace.getConfiguration('fzfsearch');
-	return config.get<string[]>('repositoryPath', []);
-}
 
 export function activate(context: vscode.ExtensionContext) {
 	const disposableSearchFiles = vscode.commands.registerCommand('fzfsearch.search.file.toggle', () => {
@@ -40,7 +28,6 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(disposableSearchContent);
 	context.subscriptions.push(disposableSearchRepo);
 }
-
 
 async function openTerminal(scriptPath: string, type: "file" | "repo") {
 	try {
@@ -120,8 +107,7 @@ async function openTerminal(scriptPath: string, type: "file" | "repo") {
 						if (OPEN_REPO_IS_CURRENT_WORKSPACE) { return; }
 
 						const repoUri = vscode.Uri.file(uri.trim());
-						const openWindowOption = openOption.trim() === '1' ? true : false;
-						vscode.commands.executeCommand('vscode.openFolder', repoUri, openWindowOption);
+						openFolder(repoUri, Number(openOption) as OpenRepoOption);
 					}
 				} else {
 					console.log('No files selected or operation cancelled.');

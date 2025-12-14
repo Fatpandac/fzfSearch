@@ -22,14 +22,14 @@ export async function ensureToolsInstalled(checkTools: string[] = NEEDED_CLI_TOO
     if (!installed) {
       vscode.window
         .showWarningMessage(
-          `未检测到 "${tool}"，建议安装以获得完整功能`,
-          "复制安装命令",
+          `"${tool}" is not installed. It is recommended to install it for full functionality.`,
+          "Copy Install Command",
         )
         .then((selection) => {
-          if (selection === "复制安装命令") {
+          if (selection === "Copy Install Command") {
             vscode.env.clipboard.writeText(generateDownloadCommand(tool));
             vscode.window.showInformationMessage(
-              `${tool} 安装命令已复制到剪贴板`,
+              `${tool} install command has been copied to the clipboard`,
             );
           }
         });

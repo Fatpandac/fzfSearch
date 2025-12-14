@@ -14,5 +14,6 @@ echo "$repos" | fzf \
     --cycle \
     --bind "enter:+execute-silent(echo {}:0 > $OUTPUT_FILE)+abort" \
     --bind "alt-enter:+execute-silent(echo {}:1 > $OUTPUT_FILE)+abort" \
+    --bind "ctrl-t:+execute-silent(echo {}:2 > $OUTPUT_FILE)+abort" \
     --bind "$KEYMAPPING" \
     --layout "$LAYOUT" || true
