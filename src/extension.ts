@@ -50,19 +50,19 @@ async function openTerminal(scriptPath: string, type: "file" | "repo") {
 		} else {
 			lastActiveEditor = undefined;
 		}
-		let cwd = os.homedir();
+		let searchPaths = [os.homedir()];
 
 		const chooseFilesPath = path.join(os.tmpdir(), './fzfsearch.tmp');
-		const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-		if (workspaceFolder) {
-			cwd = workspaceFolder.uri.fsPath;
+		const workspaceFolders = vscode.workspace.workspaceFolders;
+		if (workspaceFolders && workspaceFolders.length >= 1) {
+			searchPaths = workspaceFolders.map(folder => folder.uri.fsPath);
 		}
 		terminal = vscode.window.createTerminal({
 			name: "fzf",
 			shellPath: "bash",
 			shellArgs: ["-c", `${scriptPath} ${chooseFilesPath}`],
-			cwd: cwd,
 			env: {
+				'FZFSEARCH_SEARCH_PATHS': searchPaths.join(' '),
 				'RIPGREP_GLOB': type === "file" ? getExcludeGlob() : null,
 				'FZFSEARCH_REPO_PATH': type === "repo" ? getRepositoryPath().join(' ') : null,
 			},
@@ -93,7 +93,7 @@ async function openTerminal(scriptPath: string, type: "file" | "repo") {
 							if (filePath.includes(':')) {
 								paths = filePath.split(":");
 							}
-							const fileUri = vscode.Uri.file(path.join(cwd, paths[0].trim()));
+							const fileUri = vscode.Uri.file(paths[0].trim());
 							try {
 								const doc = await vscode.workspace.openTextDocument(fileUri);
 								const editor = await vscode.window.showTextDocument(doc, { preview: false });

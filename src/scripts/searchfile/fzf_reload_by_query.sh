@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
-
 fzf_reload_by_query() {
   q="$1"
+  searchPaths=($(eval echo "$FZFSEARCH_SEARCH_PATHS"))
 
   if [ -z "$q" ]; then
     rg --files
@@ -10,7 +10,7 @@ fzf_reload_by_query() {
 
   name=$(printf "%s" "$q:" | cut -d: -f1)
   line=$(printf "%s" "$q:" | cut -d: -f2)
-  res=$(rg --hidden --glob $RIPGREP_GLOB --files | fzf -f "$name")
+  res=$(echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg --hidden --glob $RIPGREP_GLOB --files "{}" | sed "s|^$HOME/|~/|" | fzf -f "$name")
 
   if [ -z "$res" ]; then
     return
@@ -26,7 +26,8 @@ fzf_reload_by_query() {
   fi
 
   echo "$res" | while read -r file; do
-    max_line=$(wc -l < "$file" | tr -d " ")
+    absolute_file="$(echo "$file" | sed "s|^~/|$HOME/|")"
+    max_line=$(wc -l < "$absolute_file" | tr -d " ")
     if [ "$line" -gt "$max_line" ]; then
       echo "$file:$max_line"
     else

@@ -3,13 +3,16 @@
 OUTPUT_FILE="$1"
 
 source "$(dirname "$0")/../config.sh"
+previewPath="$(dirname "$0")/../preview.sh"
+
+queryFileContent="$(dirname "$0")/query_file_content.sh"
 
 fzf --phony --query "" \
-  --preview "bat --color=always --plain --highlight-line {2} {1} 2>/dev/null || true" \
+  --preview "source $previewPath && preview {1} {2}" \
   --delimiter ':' \
   --preview-window "+{2}-10" \
-  --bind "change:reload:(rg --hidden --glob $RIPGREP_GLOB -n {q} || true)" \
-  --bind "start:reload:(rg --hidden --glob $RIPGREP_GLOB -n {q} || true)" \
+  --bind "change:reload:(source $queryFileContent && query_file_content {q})" \
+  --bind "start:reload:(source $queryFileContent && query_file_content {q})" \
   --bind "$KEYMAPPING" \
   --layout "$LAYOUT" \
-  --multi > "${OUTPUT_FILE}";
+  --multi | sed "s|^~/|$HOME/|" > "$OUTPUT_FILE"
