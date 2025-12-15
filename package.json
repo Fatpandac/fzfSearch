@@ -16,10 +16,6 @@
   "categories": [
     "Other"
   ],
-  "files": [
-    "src/scripts/",
-    "assets/logo.png"
-  ],
   "activationEvents": [
     "onStartupFinished"
   ],
