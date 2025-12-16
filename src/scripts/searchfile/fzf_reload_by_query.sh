@@ -2,22 +2,35 @@
 fzf_reload_by_query() {
   q="$1"
   searchPaths=($(eval echo "$FZFSEARCH_SEARCH_PATHS"))
+  typeset -A dir_map
+  for dir in "${searchPaths[@]}"; do
+    dir_map[${dir:t}]="$dir"
+  done
 
   if [ -z "$q" ]; then
-    for dir in "${searchPaths[@]}"; do
-     base=$(basename "$dir")
-     (rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|")
-    done
+    print -rNC1 -- "${searchPaths[@]}" | xargs -0 -P 0 -I {} zsh -c '
+      dir="{}"
+      base="${dir:t}"
+      dir="${dir%/}" 
+      glob="$1"
+      rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|"
+    ' _ "$RIPGREP_GLOB"
     return
   fi
 
   name=$(printf "%s" "$q:" | cut -d: -f1)
   line=$(printf "%s" "$q:" | cut -d: -f2)
   res=$(
-    for dir in "${searchPaths[@]}"; do
-     base=$(basename "$dir")
-     rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name"
-    done
+    print -rNC1 -- "${searchPaths[@]}" | xargs -0 -P 0 -I {} zsh -c '
+      dir="{}"
+      base="${dir:t}"
+      dir="${dir%/}" 
+      glob="$1"
+      name="$2"
+      rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name"
+    ' _ "$RIPGREP_GLOB" "$name"
+    return
+
   )
 
   if [ -z "$res" ]; then
@@ -33,18 +46,18 @@ fzf_reload_by_query() {
     return
   fi
 
-  echo "$res" | while read -r file; do
-    for dir in "${searchPaths[@]}"; do
-      base=$(basename "$dir")
+  while IFS= read -r file; do
+    for base abs_dir in "${(@kv)dir_map}"; do
       if [[ "$file" == "$base"* ]]; then
-        absolute_file="$(echo "$file" | sed "s|^$base|$dir|")"
-        max_line=$(wc -l < "$absolute_file" | tr -d " ")
-        if [ "$line" -gt "$max_line" ]; then
-          echo "$file:$max_line"
+        abs_file="${file/$base/$abs_dir}"
+        
+        if [[ -f "$abs_file" ]]; then
+            echo "$file:$line"
         else
           echo "$file:$line"
         fi
+        break
       fi
     done
-  done
+  done <<< "$res"
 }

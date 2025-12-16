@@ -22,15 +22,13 @@ fzf --phony --query "" \
   --multi
 )
 
-absolute_files=""
+echo "$selected" > a.txt
+
 echo "$selected" | while read -r file; do
   for dir in "${searchPaths[@]}"; do
     base=$(basename "$dir")
     if [[ "$file" == "$base"* ]]; then
-      absolute_files+="$(echo "$file" | sed "s|^$base|$dir|")"
-      absolute_files+=$'\n'
+      (echo "$file" | sed "s|^$base|$dir|")
     fi
   done
-done
-
-echo "$absolute_files" > "$OUTPUT_FILE"
+done > "$OUTPUT_FILE"
