@@ -4,9 +4,9 @@ query_file_content() {
   searchPaths=($(eval echo "$FZFSEARCH_SEARCH_PATHS"))
 
   if [ -z "$q" ]; then
-    echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg --hidden --glob $RIPGREP_GLOB -n "" "{}" | sed "s|^$HOME/|~/|"
+    echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg -S --hidden --glob $RIPGREP_GLOB -n "" "{}" | sed "s|^$HOME/|~/|"
     return
   fi
   
-  echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg --hidden --glob $RIPGREP_GLOB -n "$q" "{}" | sed "s|^$HOME/|~/|"
+  echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg -S --hidden --glob $RIPGREP_GLOB -n "$q" "{}" | sed "s|^$HOME/|~/|"
 }

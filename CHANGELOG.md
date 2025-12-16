@@ -4,6 +4,7 @@
 
 - Enhancement: Support search with VSCode workspace folders.
 - Enhancement: add shortcut ctrl-t to open repository in current workspace.
+- Change: Updated use --smart-case flag by default with rg.
 
 ## [v0.0.4] - 2025-12-10
 
