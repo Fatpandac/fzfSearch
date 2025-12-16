@@ -4,13 +4,21 @@ fzf_reload_by_query() {
   searchPaths=($(eval echo "$FZFSEARCH_SEARCH_PATHS"))
 
   if [ -z "$q" ]; then
-    rg --files
+    for dir in "${searchPaths[@]}"; do
+     base=$(basename "$dir")
+     (rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|")
+    done
     return
   fi
 
   name=$(printf "%s" "$q:" | cut -d: -f1)
   line=$(printf "%s" "$q:" | cut -d: -f2)
-  res=$(echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg --hidden --glob $RIPGREP_GLOB --files "{}" | sed "s|^$HOME/|~/|" | fzf -f "$name")
+  res=$(
+    for dir in "${searchPaths[@]}"; do
+     base=$(basename "$dir")
+     rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name"
+    done
+  )
 
   if [ -z "$res" ]; then
     return
@@ -26,12 +34,17 @@ fzf_reload_by_query() {
   fi
 
   echo "$res" | while read -r file; do
-    absolute_file="$(echo "$file" | sed "s|^~/|$HOME/|")"
-    max_line=$(wc -l < "$absolute_file" | tr -d " ")
-    if [ "$line" -gt "$max_line" ]; then
-      echo "$file:$max_line"
-    else
-      echo "$file:$line"
-    fi
+    for dir in "${searchPaths[@]}"; do
+      base=$(basename "$dir")
+      if [[ "$file" == "$base"* ]]; then
+        absolute_file="$(echo "$file" | sed "s|^$base|$dir|")"
+        max_line=$(wc -l < "$absolute_file" | tr -d " ")
+        if [ "$line" -gt "$max_line" ]; then
+          echo "$file:$max_line"
+        else
+          echo "$file:$line"
+        fi
+      fi
+    done
   done
 }

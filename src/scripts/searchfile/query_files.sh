@@ -2,6 +2,8 @@
 query_files() {
   searchPaths=($(eval echo "$FZFSEARCH_SEARCH_PATHS"))
     
-  # xargs to handle multiple paths and remove the $HOME
-  echo -e "${searchPaths[*]// /\\n}" | xargs -I {} rg --hidden --glob $RIPGREP_GLOB --files "{}" | sed "s|^$HOME/|~/|"
+  for dir in "${searchPaths[@]}"; do
+   base=$(basename "$dir")
+   (rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|")
+  done
 }
