@@ -1,10 +1,11 @@
 # Change Log
 
-## [v0.0.5-pre.0] - 2025-12-15
+## [v0.0.6] - 2025-12-15
 
 - Enhancement: Support search with VSCode workspace folders.
 - Enhancement: add shortcut ctrl-t to open repository in current workspace.
 - Change: Updated use --smart-case flag by default with rg.
+- Improvement: use xargs multi-processing to speed up search.
 
 ## [v0.0.4] - 2025-12-10
 

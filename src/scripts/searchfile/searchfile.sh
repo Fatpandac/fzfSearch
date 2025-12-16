@@ -22,8 +22,6 @@ fzf --phony --query "" \
   --multi
 )
 
-echo "$selected" > a.txt
-
 echo "$selected" | while read -r file; do
   for dir in "${searchPaths[@]}"; do
     base=$(basename "$dir")

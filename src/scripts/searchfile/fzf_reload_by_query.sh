@@ -22,42 +22,25 @@ fzf_reload_by_query() {
   line=$(printf "%s" "$q:" | cut -d: -f2)
   res=$(
     print -rNC1 -- "${searchPaths[@]}" | xargs -0 -P 0 -I {} zsh -c '
-      dir="{}"
+      dir="$1"
+      glob="$2"
+      name="$3"
+      line="$4"
+
       base="${dir:t}"
-      dir="${dir%/}" 
-      glob="$1"
-      name="$2"
-      rg --hidden --glob "$RIPGREP_GLOB" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name"
-    ' _ "$RIPGREP_GLOB" "$name"
-    return
+      dir="${dir%/}"
 
-  )
+      result=$(rg --hidden --glob "$glob" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name")
 
-  if [ -z "$res" ]; then
-    return
-  fi
-
-  if [ -z "$line" ]; then
-    if [[ "$q" == *:* ]]; then
-      echo "$res" | xargs -I{} echo {}:
-    else
-      echo "$res"
-    fi
-    return
-  fi
-
-  while IFS= read -r file; do
-    for base abs_dir in "${(@kv)dir_map}"; do
-      if [[ "$file" == "$base"* ]]; then
-        abs_file="${file/$base/$abs_dir}"
-        
-        if [[ -f "$abs_file" ]]; then
-            echo "$file:$line"
+      if [ -n "$result" ]; then
+        if [ -n "$line" ]; then
+          echo "${result}" | sed "s|$|:$line|"
         else
-          echo "$file:$line"
+          echo "$result"
         fi
-        break
       fi
-    done
-  done <<< "$res"
+    ' _ {} "$RIPGREP_GLOB" "$name" "$line"
+    return
+  )
+  echo "$res"
 }
