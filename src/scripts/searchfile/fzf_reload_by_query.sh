@@ -20,27 +20,23 @@ fzf_reload_by_query() {
 
   name=$(printf "%s" "$q:" | cut -d: -f1)
   line=$(printf "%s" "$q:" | cut -d: -f2)
-  res=$(
-    print -rNC1 -- "${searchPaths[@]}" | xargs -0 -P 0 -I {} zsh -c '
-      dir="$1"
-      glob="$2"
-      name="$3"
-      line="$4"
+  print -rNC1 -- "${searchPaths[@]}" | xargs -0 -P 0 -I {} zsh -c '
+    dir="$1"
+    glob="$2"
+    name="$3"
+    line="$4"
 
-      base="${dir:t}"
-      dir="${dir%/}"
+    base="${dir:t}"
+    dir="${dir%/}"
 
-      result=$(rg --hidden --glob "$glob" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name")
+    result=$(rg --hidden --glob "$glob" --files "$dir" | sed "s|^$dir|$base|" | fzf -f "$name")
 
-      if [ -n "$result" ]; then
-        if [ -n "$line" ]; then
-          echo "${result}" | sed "s|$|:$line|"
-        else
-          echo "$result"
-        fi
+    if [ -n "$result" ]; then
+      if [ -n "$line" ]; then
+        echo "${result}" | sed "s|$|:$line|"
+      else
+        echo "$result"
       fi
-    ' _ {} "$RIPGREP_GLOB" "$name" "$line"
-    return
-  )
-  echo "$res"
+    fi
+  ' _ {} "$RIPGREP_GLOB" "$name" "$line"
 }
