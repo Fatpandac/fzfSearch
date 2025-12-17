@@ -1,6 +1,6 @@
 # Change Log
 
-## [v0.0.6] - 2025-12-15
+## [v0.0.7] - 2025-12-17
 
 - Enhancement: Support search with VSCode workspace folders.
 - Enhancement: add shortcut ctrl-t to open repository in current workspace.
