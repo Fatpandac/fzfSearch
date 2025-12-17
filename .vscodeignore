@@ -15,3 +15,4 @@ vsc-extension-quickstart.md
 *lock.yaml
 *lock.json
 !assets/logo.png
+.github/**
