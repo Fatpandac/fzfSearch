@@ -33,6 +33,10 @@
       {
         "command": "fzfsearch.search.repo.toggle",
         "title": "fzfSearch: search repo toggle"
+      },
+      {
+        "command": "fzfsearch.search.gitStatus.toggle",
+        "title": "fzfSearch: search git status toggle"
       }
     ],
     "configuration": {

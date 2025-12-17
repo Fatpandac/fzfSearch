@@ -28,7 +28,7 @@ function openSelected(selected: string[], type: "file" | "repo") {
 					);
 				}
 			} catch (openErr) {
-				console.error(`Error opening file selected from FilesFzf:{openErr}`);
+				console.error(`Error opening file selected from FilesFzf:${openErr}`);
 				vscode.window.showErrorMessage(`Failed to open: ${filePath}`);
 			}
 		});
