@@ -26,5 +26,5 @@ brew install fzf ripgrep bat fd onefetch
 Specific to repository search:
 - `Alt+Enter`: open the selected files in a new VSCode window
 - `Enter`: open the selected files in the current VSCode window
-
+- `Ctrl+t`: open the selected repository in the current workspace
 
