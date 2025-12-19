@@ -7,7 +7,10 @@ previewPath="$(dirname "$0")/preview.sh"
 
 SCAN_PATHS=($(eval echo "$FZFSEARCH_REPO_PATH"))
 
-repos=$(fd --type d --hidden --glob "*.git" "${SCAN_PATHS[@]}" 2>/dev/null | sed 's/\/\.git\/$//')
+gitRepos=$(fd -td --hidden --glob "*.git" "${SCAN_PATHS[@]}" 2>/dev/null | sed 's/\/\.git\/$//')
+workspace=$(fd -tf --hidden --glob "*.code-workspace" "${SCAN_PATHS[@]}" 2>/dev/null)
+
+repos="${gitRepos}\n${workspace}"
 
 echo "$repos" | fzf \
     --preview "source $previewPath && preview {1}" \
