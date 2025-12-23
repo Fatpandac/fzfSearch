@@ -4,17 +4,12 @@ OUTPUT_FILE="$1"
 source "$(dirname "$0")/../config.sh"
 
 previewPath="$(dirname "$0")/preview.sh"
-
-SCAN_PATHS=($(eval echo "$FZFSEARCH_REPO_PATH"))
-
-gitRepos=$(fd -td --hidden --glob "*.git" "${SCAN_PATHS[@]}" 2>/dev/null | sed 's/\/\.git\/$//')
-workspace=$(fd -tf --hidden --glob "*.code-workspace" "${SCAN_PATHS[@]}" 2>/dev/null)
-
-repos="${gitRepos}\n${workspace}"
+loadReposPath="$(dirname "$0")/loadRepo.sh"
 
 echo "$repos" | fzf \
     --preview "source $previewPath && preview {1}" \
     --cycle \
+    --bind "start:reload:(source $loadReposPath && load_repos)" \
     --bind "enter:+execute-silent(echo {}:0 > $OUTPUT_FILE)+abort" \
     --bind "alt-enter:+execute-silent(echo {}:1 > $OUTPUT_FILE)+abort" \
     --bind "ctrl-t:+execute-silent(echo {}:2 > $OUTPUT_FILE)+abort" \
