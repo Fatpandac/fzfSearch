@@ -1,5 +1,11 @@
 # Change Log
 
+## [v0.0.8] - 2025-12-23
+
+- Enhancement: Support git status `fzfsearch.search.gitStatus.toggle`
+- Enhancement: Support search `*.code-workspace` in search repo.
+- Improvement: Reduce blank screen time on initial load by executing repo search immediately.
+
 ## [v0.0.7] - 2025-12-17
 
 - Enhancement: Support search with VSCode workspace folders.
