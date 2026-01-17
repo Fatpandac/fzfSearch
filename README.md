@@ -15,6 +15,12 @@ brew install fzf ripgrep bat fd onefetch
 
 `onefetch` is optional and only used to display repository information in the preview window.
 
+# Features
+- Quickly search files in the current workspace using `fzf` and `fd`.
+- Search for text inside files using `ripgrep` and preview results with `bat`.
+- Search across multiple repositories in a specified directory.
+- Manage and open changed files using `git status`.
+- Support for VSCode workspace folders.
 
 # Shortcuts
 
@@ -27,4 +33,7 @@ Specific to repository search:
 - `Alt+Enter`: open the selected files in a new VSCode window
 - `Enter`: open the selected files in the current VSCode window
 - `Ctrl+t`: open the selected repository in the current workspace
+
+Specific to git status search:
+- `Alt+a`: stage/unstage files
 

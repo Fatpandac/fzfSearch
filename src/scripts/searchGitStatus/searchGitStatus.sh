@@ -12,7 +12,6 @@ git -c color.status=always status -s | fzf --ansi \
   --preview="source $previewPath && preview {2}" \
   --bind='ctrl-a:+execute-silent(
     if git diff --cached --name-only | grep -Fxq {2}; then
-      echo "hello world"
       git restore --staged {2}
     else
       git add {2}

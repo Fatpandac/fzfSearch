@@ -1,6 +1,6 @@
 # Change Log
 
-## [v0.0.8] - 2025-12-23
+## [v0.0.9] - 2025-12-23
 
 - Enhancement: Support git status `fzfsearch.search.gitStatus.toggle`
 - Enhancement: Support search `*.code-workspace` in search repo.
